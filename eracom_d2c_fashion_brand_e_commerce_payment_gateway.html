@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERACOM | Official D2C Fashion Store & Multi-Branch Ecosystem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QRCode.js for Dynamic QRIS Simulation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1D4ED8',
+                            electric: '#2563EB',
+                            lightBlue: '#3B82F6',
+                            orange: '#F97316',
+                            amber: '#EA580C',
+                            dark: '#0B1120',
+                            slate: '#0F172A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .glass-header {
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .hero-fashion {
+            background-color: #0B1120;
+            background-image: 
+                radial-gradient(at 80% 20%, rgba(37, 99, 235, 0.25) 0px, transparent 50%),
+                radial-gradient(at 15% 85%, rgba(249, 115, 22, 0.22) 0px, transparent 50%);
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #invoice-printable, #invoice-printable * { visibility: visible; }
+            #invoice-printable { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-orange selection:text-white">
+
+    <!-- ==================== HEADER & BRANCH ARCHITECTURE SWITCHER ==================== -->
+    <header class="sticky top-0 z-40 glass-header text-white border-b border-slate-800 shadow-lg">
+        <!-- Top Brand Announcement & Single vs Multi-Branch Switcher -->
+        <div class="bg-slate-950 border-b border-slate-800/80 py-1.5 px-4 text-xs">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2 text-slate-300">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-medium">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        Official D2C Store
+                    </span>
+                    <span class="hidden sm:inline text-slate-600">|</span>
+                    <span class="hidden sm:inline">Kode Promo: <strong class="text-brand-orange cursor-pointer hover:underline" onclick="copyVoucherCode('ERACOM20')">ERACOM20</strong> (Diskon 20%) atau <strong class="text-blue-400 cursor-pointer hover:underline" onclick="copyVoucherCode('NEWDROP')">NEWDROP</strong> (Potongan Rp 50rb)</span>
+                </div>
+
+                <!-- Switcher: 1 Flagship Store vs Multi-Cabang Brand -->
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-400 hidden md:inline">Mode Operasional Brand:</span>
+                    <div class="inline-flex rounded-lg bg-slate-900 p-0.5 border border-slate-700" role="group">
+                        <button id="btn-mode-single" onclick="switchBranchMode('single')" class="px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white">
+                            <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
+                            <span>1 Flagship Store</span>
+                        </button>
+                        <button id="btn-mode-multi" onclick="switchBranchMode('multi')" class="px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 bg-gradient-to-r from-brand-electric to-brand-blue text-white shadow">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                            <span>Multi-Cabang Brand (3 Kota)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Brand Navigation -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between gap-4">
+                <!-- Brand Logo: ERACOM with Futuristic E Blue & Orange Orbit -->
+                <a href="#" onclick="switchMainView('storefront')" class="flex items-center gap-3 group shrink-0">
+                    <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 border border-slate-700/80 flex items-center justify-center shadow-lg group-hover:border-brand-orange/60 transition-all overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-orange-500/20"></div>
+                        <svg viewBox="0 0 100 100" class="w-8 h-8 relative z-10 drop-shadow">
+                            <defs>
+                                <linearGradient id="eBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3B82F6"/>
+                                    <stop offset="50%" stop-color="#1D4ED8"/>
+                                    <stop offset="100%" stop-color="#1E3A8A"/>
+                                </linearGradient>
+                                <linearGradient id="eOrangeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#EA580C"/>
+                                    <stop offset="50%" stop-color="#F97316"/>
+                                    <stop offset="100%" stop-color="#FBBF24"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M26 22 H68 L62 34 H38 V44 H60 L55 55 H38 V66 H66 L61 78 H26 C22 78 20 75 20 71 V29 C20 25 22 22 26 22 Z" fill="url(#eBlueGrad)"/>
+                            <path d="M12 62 C8 76, 38 86, 68 68 C84 58, 86 43, 73 37 C81 45, 76 56, 61 64 C38 76, 16 70, 17 58 Z" fill="url(#eOrangeGrad)"/>
+                            <rect x="70" y="18" width="9" height="9" rx="2" fill="#2563EB"/>
+                            <rect x="82" y="12" width="10" height="10" rx="2" fill="#F97316"/>
+                            <rect x="81" y="25" width="7" height="7" rx="1.5" fill="#3B82F6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-display font-extrabold text-xl tracking-tight text-white">ERACOM</span>
+                            <span class="font-display font-light text-xl tracking-widest text-slate-300">STUDIO</span>
+                        </div>
+                        <p id="header-brand-subtitle" class="text-[11px] text-slate-400 leading-tight">Official Store • Bandung • Jakarta • Surabaya</p>
+                    </div>
+                </a>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-md relative">
+                    <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Cari jaket, hoodie, oversized tee, cargo..." 
+                        class="w-full bg-slate-900/90 border border-slate-700 text-sm text-white placeholder-slate-400 rounded-xl pl-10 pr-16 py-2 focus:outline-none focus:border-brand-electric focus:ring-2 focus:ring-brand-electric/30 transition-all">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-2.5 text-slate-400"></i>
+                    <button onclick="clearSearch()" id="clear-search-btn" class="hidden absolute right-3 top-2 text-xs text-slate-400 hover:text-white">Reset</button>
+                </div>
+
+                <!-- Navigation Tabs & Shopping Bag -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <nav class="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+                        <button onclick="switchMainView('storefront')" id="nav-tab-storefront" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-brand-electric text-white transition-all flex items-center gap-1.5">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            <span class="hidden sm:inline">Koleksi</span>
+                        </button>
+                        <button onclick="switchMainView('orders')" id="nav-tab-orders" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5 relative">
+                            <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+                            <span class="hidden sm:inline">Pesanan</span>
+                            <span id="orders-badge" class="hidden w-4 h-4 rounded-full bg-brand-orange text-[10px] font-bold text-white flex items-center justify-center">0</span>
+                        </button>
+                        <button onclick="switchMainView('backoffice')" id="nav-tab-backoffice" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
+                            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-brand-orange"></i>
+                            <span class="hidden lg:inline">Brand Backoffice</span>
+                            <span class="lg:hidden">Owner</span>
+                        </button>
+                    </nav>
+
+                    <!-- Shopping Bag Button -->
+                    <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white transition-all group">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 group-hover:text-brand-orange transition-colors"></i>
+                        <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-brand-orange text-white text-[11px] font-bold flex items-center justify-center shadow-md">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search -->
+            <div class="mt-2.5 md:hidden relative">
+                <input type="text" id="search-input-mobile" oninput="handleSearch(this.value)" placeholder="Cari koleksi ERACOM..." 
+                    class="w-full bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-400 rounded-xl pl-9 pr-4 py-2 focus:outline-none focus:border-brand-electric">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== VIEW 1: D2C BRAND STOREFRONT ==================== -->
+    <main id="view-storefront" class="pb-16">
+        <!-- Fashion Editorial Hero -->
+        <section class="hero-fashion text-white border-b border-slate-800 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold">
+                            <i data-lucide="zap" class="w-3.5 h-3.5 text-brand-orange"></i>
+                            <span id="hero-mode-badge">SEASON 04: TECH-STREETWEAR • DIRECT-TO-CONSUMER</span>
+                        </div>
+                        <h1 id="hero-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                            Arsitektur Gaya Urban <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-200 to-brand-orange">ERACOM</span>.
+                        </h1>
+                        <p id="hero-desc" class="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                            Koleksi eksklusif langsung dari studio desain kami. Tersedia pengiriman dari gudang pusat Bandung maupun opsi Same-Day & Pick Up In-Store di cabang resmi Jakarta Selatan dan Surabaya.
+                        </p>
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <a href="#katalog-section" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-electric to-brand-blue hover:from-blue-500 hover:to-blue-700 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2">
+                                <span>Belanja Koleksi Baru</span>
+                                <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                            </a>
+                            <button onclick="openSizeChartModal()" class="px-5 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold text-sm transition-all flex items-center gap-2">
+                                <i data-lucide="ruler" class="w-4 h-4 text-brand-orange"></i>
+                                <span>Panduan Ukuran (Size Chart)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lookbook Highlight Card -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 shadow-2xl relative overflow-hidden">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="relative rounded-xl overflow-hidden h-48 group">
+                                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80" alt="Elvara Technical Jacket" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-2.5 left-2.5 text-[11px] font-bold text-white">Aero Shell Jacket</span>
+                                </div>
+                                <div class="relative rounded-xl overflow-hidden h-48 group">
+                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80" alt="Elvara Heavyweight Tee" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-2.5 left-2.5 text-[11px] font-bold text-white">Heavyweight Boxy Tee</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                                <span id="hero-branch-status" class="text-slate-300 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    3 Outlet Resmi Siap Kirim & Pickup
+                                </span>
+                                <span class="text-brand-orange font-bold">100% Original Brand</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Official Brand Outlets / Branch Selector Bar -->
+        <section class="bg-white border-b border-slate-200 shadow-2xs">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <!-- Multi-Branch Mode Selector -->
+                <div id="multi-branch-container">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="store" class="w-4 h-4 text-brand-electric"></i>
+                            <span>Pilih Cabang Resmi ERACOM (Cek Stok & Pickup Terdekat)</span>
+                        </h2>
+                        <span class="text-xs text-slate-500">Semua cabang dikelola langsung oleh ERACOM</span>
+                    </div>
+                    <div id="branch-pills-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Single Flagship Store Mode Banner -->
+                <div id="single-branch-container" class="hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-blue-50 to-orange-50/50 border border-blue-200/80 rounded-2xl p-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-brand-electric text-white flex items-center justify-center shadow-md shrink-0">
+                                <i data-lucide="warehouse" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h2 class="font-bold text-slate-900 text-base">ERACOM — Flagship & Central Warehouse (Bandung)</h2>
+                                    <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-full">1 FLAGSHIP STORE</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mt-0.5">Jl. Trunojoyo No. 28, Kota Bandung • Pengiriman Terpusat Seluruh Indonesia • Stok Nasional Terintegrasi</p>
+                            </div>
+                        </div>
+                        <button onclick="switchBranchMode('multi')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all shrink-0">
+                            Aktifkan Mode Multi-Cabang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fashion Catalog Section -->
+        <section id="katalog-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <!-- Category & Sorting Toolbar -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div id="category-filters" class="flex items-center gap-2 overflow-x-auto pb-1">
+                    <!-- Rendered via JS -->
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0">
+                    <label class="inline-flex items-center gap-2 text-xs font-medium text-slate-600 cursor-pointer bg-white px-3 py-2 rounded-xl border border-slate-200">
+                        <input type="checkbox" id="filter-instock" onchange="renderProducts()" class="rounded text-brand-electric focus:ring-brand-electric">
+                        <span>Ready Stock</span>
+                    </label>
+                    <select id="sort-select" onchange="renderProducts()" class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none focus:border-brand-electric">
+                        <option value="featured">Urutkan: Koleksi Utama</option>
+                        <option value="price-asc">Harga: Terendah - Tertinggi</option>
+                        <option value="price-desc">Harga: Tertinggi - Terendah</option>
+                        <option value="bestseller">Paling Laris</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Status Info -->
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-4">
+                <p id="product-count-label">Menampilkan semua koleksi ERACOM</p>
+                <button id="reset-all-filters-btn" onclick="resetFilters()" class="hidden text-brand-electric hover:underline font-semibold">Reset Filter</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Fashion Cards injected via JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-products-state" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200">
+                <div class="w-14 h-14 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="shirt" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-800">Artikel fashion tidak ditemukan</h3>
+                <p class="text-xs text-slate-500 mt-1">Coba kata kunci lain atau ubah filter kategori/cabang.</p>
+                <button onclick="resetFilters()" class="mt-4 px-4 py-2 rounded-xl bg-brand-electric text-white text-xs font-semibold hover:bg-blue-700">Lihat Semua Koleksi</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== VIEW 2: RIWAYAT PESANAN PELANGGAN ==================== -->
+    <section id="view-orders" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+                <h1 class="font-display text-2xl font-extrabold text-slate-900">Pesanan Saya & E-Receipt</h1>
+                <p class="text-xs text-slate-500 mt-0.5">Lacak status pembayaran gateway, pengiriman kurir, maupun pengambilan di toko (In-Store Pickup).</p>
+            </div>
+            <button onclick="switchMainView('storefront')" class="px-4 py-2 rounded-xl bg-brand-electric text-white text-xs font-semibold hover:bg-blue-700 self-start flex items-center gap-1.5">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Belanja Koleksi Lain
+            </button>
+        </div>
+
+        <div id="orders-list-container" class="space-y-4">
+            <!-- Orders rendered via JS -->
+        </div>
+    </section>
+
+    <!-- ==================== VIEW 3: BRAND OWNER BACKOFFICE (ERP / POS / INVENTORY) ==================== -->
+    <section id="view-backoffice" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20">
+        <!-- Owner Header -->
+        <div class="bg-slate-900 text-white rounded-2xl p-6 mb-6 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded bg-brand-orange text-white text-[11px] font-bold uppercase">Brand Owner Backoffice</span>
+                    <span class="text-xs text-slate-400">ERACOM Internal ERP & Payment Monitor</span>
+                </div>
+                <h1 class="font-display text-2xl font-extrabold mt-1">Dashboard Manajemen Brand & Stok Cabang</h1>
+                <p class="text-xs text-slate-400 mt-1">Pantau pendapatan langsung D2C, kelola stok ukuran (S, M, L, XL) per cabang, proses pesanan pelanggan, dan inspeksi webhook payment gateway.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <select id="backoffice-branch-filter" onchange="renderBackoffice()" class="bg-slate-800 border border-slate-700 text-white text-xs font-semibold rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-brand-orange">
+                    <option value="all">Semua Cabang ERACOM (Nasional)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Brand KPI Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-slate-500">Omzet Lunas (D2C)</span>
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="wallet" class="w-4 h-4"></i></div>
+                </div>
+                <p id="bo-kpi-revenue" class="text-2xl font-extrabold text-slate-900 mt-2">Rp 0</p>
+                <p class="text-[11px] text-emerald-600 font-medium mt-1">100% Margin Brand (Tanpa Potongan Marketplace)</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-slate-500">Total Order Masuk</span>
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-brand-electric flex items-center justify-center"><i data-lucide="shopping-bag" class="w-4 h-4"></i></div>
+                </div>
+                <p id="bo-kpi-orders" class="text-2xl font-extrabold text-slate-900 mt-2">0</p>
+                <p class="text-[11px] text-slate-500 mt-1">Delivery & In-Store Pickup</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-slate-500">Total Stok Artikel</span>
+                    <div class="w-8 h-8 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center"><i data-lucide="layers" class="w-4 h-4"></i></div>
+                </div>
+                <p id="bo-kpi-stock" class="text-2xl font-extrabold text-slate-900 mt-2">0 pcs</p>
+                <p class="text-[11px] text-slate-500 mt-1">Akumulasi seluruh ukuran S-XL</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-slate-500">Gateway Webhook</span>
+                    <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center"><i data-lucide="activity" class="w-4 h-4"></i></div>
+                </div>
+                <p id="bo-kpi-webhooks" class="text-2xl font-extrabold text-slate-900 mt-2">0</p>
+                <p class="text-[11px] text-emerald-600 font-medium mt-1">Endpoint ERP Aktif (200 OK)</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left 7 Cols: Fulfillment Orders & Webhook Logs -->
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Customer Orders Fulfillment -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                    <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                        <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i data-lucide="package-check" class="w-4 h-4 text-brand-electric"></i>
+                            <span>Fulfillment Pesanan Pelanggan</span>
+                        </h2>
+                        <span class="text-[11px] text-slate-500">Update status proses gudang/toko</span>
+                    </div>
+                    <div id="bo-orders-container" class="divide-y divide-slate-100 max-h-[360px] overflow-y-auto">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Payment Gateway Webhook Payload Monitor -->
+                <div class="bg-slate-950 text-slate-200 rounded-2xl border border-slate-800 shadow-lg overflow-hidden">
+                    <div class="px-4 py-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                            <h3 class="text-xs font-mono font-bold text-white">ERP PAYMENT WEBHOOK LOGS (JSON)</h3>
+                        </div>
+                        <button onclick="clearWebhookLogs()" class="text-[11px] text-slate-400 hover:text-white">Bersihkan Log</button>
+                    </div>
+                    <div id="webhook-logs-container" class="p-4 font-mono text-xs space-y-2.5 max-h-64 overflow-y-auto">
+                        <p class="text-slate-500">// Menunggu callback transaksi dari Payment Gateway...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right 5 Cols: Quick Stock Manager per Size & Branch -->
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs p-5 sticky top-24 space-y-4">
+                    <div class="pb-3 border-b border-slate-100">
+                        <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                            <i data-lucide="boxes" class="w-4 h-4 text-brand-orange"></i>
+                            <span>Manajemen Stok Varian Ukuran</span>
+                        </h2>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tambah/restock inventaris cabang secara real-time</p>
+                    </div>
+
+                    <div id="bo-inventory-list" class="space-y-3 max-h-[520px] overflow-y-auto pr-1">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE-OVER SHOPPING BAG DRAWER ==================== -->
+    <div id="cart-drawer-overlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-orange"></i>
+                <div>
+                    <h2 class="font-bold text-sm">Shopping Bag — ERACOM</h2>
+                    <p id="cart-mode-label" class="text-[11px] text-slate-400">Pengiriman & In-Store Pickup Cabang</p>
+                </div>
+            </div>
+            <button onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+            <!-- Grouped by branch -->
+        </div>
+
+        <div class="p-4 bg-white border-t border-slate-200 space-y-3">
+            <!-- Promo Code Input -->
+            <div class="flex gap-2">
+                <input type="text" id="promo-code-input" placeholder="Kode Promo (ERACOM20 / NEWDROP)" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs uppercase font-semibold focus:outline-none focus:border-brand-electric">
+                <button onclick="applyPromoCode()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">Terapkan</button>
+            </div>
+            <p id="promo-feedback" class="text-[11px] hidden"></p>
+
+            <!-- Summary -->
+            <div class="space-y-1.5 text-xs pt-1 border-t border-slate-100">
+                <div class="flex justify-between text-slate-600">
+                    <span>Subtotal Produk</span>
+                    <span id="cart-subtotal" class="font-semibold text-slate-800">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-slate-600">
+                    <span>Ongkir / Biaya Pengambilan</span>
+                    <span id="cart-shipping" class="font-semibold text-slate-800">Rp 0</span>
+                </div>
+                <div id="cart-discount-row" class="hidden flex justify-between text-emerald-600 font-medium">
+                    <span>Diskon Voucher Brand</span>
+                    <span id="cart-discount">-Rp 0</span>
+                </div>
+                <div class="flex justify-between text-sm font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+                    <span>Total Pembayaran</span>
+                    <span id="cart-grand-total" class="text-brand-electric">Rp 0</span>
+                </div>
+            </div>
+
+            <button id="btn-proceed-checkout" onclick="openCheckoutModal()" disabled class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-orange to-amber-600 hover:from-orange-500 hover:to-amber-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-lg shadow-orange-500/25 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                <span>Lanjut ke Pembayaran</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==================== MODAL 1: PRODUCT DETAIL (SIZE, COLOR SWATCH, BRANCH STOCK & RESELLER BUNDLE) ==================== -->
+    <div id="product-detail-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-xs z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200 my-auto">
+            <div id="product-detail-content">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 2: SIZE CHART MODAL ==================== -->
+    <div id="size-chart-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200">
+            <div class="px-5 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="ruler" class="w-4 h-4 text-brand-orange"></i>
+                    <h3 class="font-bold text-sm">ERACOM — Official Size Chart (cm)</h3>
+                </div>
+                <button onclick="closeSizeChartModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <p class="text-slate-600">Potongan artikel ERACOM menggunakan standar <strong>Modern Boxy / Relaxed Fit</strong>. Pilih 1 ukuran lebih kecil jika menginginkan tampilan reguler.</p>
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-100 text-slate-800 font-bold">
+                            <tr>
+                                <th class="p-2.5 border-b">Ukuran</th>
+                                <th class="p-2.5 border-b">Lebar Dada</th>
+                                <th class="p-2.5 border-b">Panjang Badan</th>
+                                <th class="p-2.5 border-b">Panjang Lengan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700">
+                            <tr><td class="p-2.5 font-bold">S</td><td class="p-2.5">54 cm</td><td class="p-2.5">68 cm</td><td class="p-2.5">22 cm</td></tr>
+                            <tr><td class="p-2.5 font-bold">M</td><td class="p-2.5">56 cm</td><td class="p-2.5">70 cm</td><td class="p-2.5">23 cm</td></tr>
+                            <tr><td class="p-2.5 font-bold">L</td><td class="p-2.5">58 cm</td><td class="p-2.5">72 cm</td><td class="p-2.5">24 cm</td></tr>
+                            <tr><td class="p-2.5 font-bold">XL</td><td class="p-2.5">61 cm</td><td class="p-2.5">75 cm</td><td class="p-2.5">25 cm</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="closeSizeChartModal()" class="w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold">Tutup Panduan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 3: PAYMENT GATEWAY CHECKOUT (MIDTRANS / XENDIT STYLE) ==================== -->
+    <div id="payment-gateway-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl border border-slate-700 my-auto">
+            <!-- Gateway Top Header -->
+            <div class="bg-slate-900 text-white px-5 py-4 flex items-center justify-between border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-electric to-brand-orange flex items-center justify-center font-display font-extrabold text-lg">E</div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-sm">ERACOM Pay Gateway</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded">SANDBOX DEMO</span>
+                        </div>
+                        <p id="pg-order-id" class="text-[11px] text-slate-400 font-mono">ORDER-ID: #ELV-2026-0001</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-[10px] text-slate-400 uppercase">Sisa Waktu Bayar</p>
+                        <p id="pg-countdown" class="font-mono text-sm font-bold text-brand-orange">14:59</p>
+                    </div>
+                    <button onclick="closePaymentGateway()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 1: Buyer Info & Payment Channels -->
+            <div id="pg-step-select" class="grid grid-cols-1 lg:grid-cols-12">
+                <div class="lg:col-span-7 p-5 border-b lg:border-b-0 lg:border-r border-slate-200 space-y-4 max-h-[75vh] overflow-y-auto">
+                    <!-- Recipient / Pickup Form -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2.5">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                            <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-orange"></i> Data Penerima / Pengambil di Toko
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <input type="text" id="pg-buyer-name" value="Raka Pratama" placeholder="Nama Lengkap" class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-brand-electric">
+                            <input type="tel" id="pg-buyer-phone" value="0812-9988-7766" placeholder="No. WhatsApp" class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-brand-electric">
+                        </div>
+                        <input type="text" id="pg-buyer-address" value="Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan" placeholder="Alamat Pengiriman (atau catatan pickup)" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-brand-electric">
+                    </div>
+
+                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pilih Metode Pembayaran</h3>
+
+                    <!-- QRIS -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <button type="button" onclick="selectPaymentChannel('QRIS', 'QRIS Instant (Semua E-Wallet & M-Banking)')" class="pg-channel-btn w-full p-3.5 text-left flex items-center justify-between hover:bg-blue-50/50 transition-all bg-blue-50/50 border-l-4 border-brand-electric" data-channel="QRIS">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center font-extrabold text-xs">QRIS</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-900">QRIS Instan</p>
+                                    <p class="text-[11px] text-slate-500">Scan via GoPay, OVO, DANA, ShopeePay, BCA, Mandiri</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-700 rounded">Instan</span>
+                        </button>
+                    </div>
+
+                    <!-- Virtual Account -->
+                    <div class="border border-slate-200 rounded-xl p-3.5 space-y-2.5">
+                        <p class="text-xs font-bold text-slate-800">Virtual Account Bank</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="selectPaymentChannel('VA_BCA', 'BCA Virtual Account')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="VA_BCA">
+                                <span class="font-extrabold text-xs text-blue-800 block">BCA</span>
+                                <span class="text-[10px] text-slate-500">Virtual Acc</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('VA_MANDIRI', 'Mandiri Virtual Account')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="VA_MANDIRI">
+                                <span class="font-extrabold text-xs text-amber-600 block">MANDIRI</span>
+                                <span class="text-[10px] text-slate-500">Virtual Acc</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('VA_BNI', 'BNI Virtual Account')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="VA_BNI">
+                                <span class="font-extrabold text-xs text-orange-600 block">BNI</span>
+                                <span class="text-[10px] text-slate-500">Virtual Acc</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('VA_BRI', 'BRI Virtual Account')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="VA_BRI">
+                                <span class="font-extrabold text-xs text-blue-600 block">BRI</span>
+                                <span class="text-[10px] text-slate-500">Virtual Acc</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- E-Wallet -->
+                    <div class="border border-slate-200 rounded-xl p-3.5 space-y-2.5">
+                        <p class="text-xs font-bold text-slate-800">Dompet Digital (E-Wallet)</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="selectPaymentChannel('EWALLET_GOPAY', 'GoPay')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="EWALLET_GOPAY">
+                                <span class="font-extrabold text-xs text-sky-600 block">GoPay</span>
+                                <span class="text-[10px] text-slate-500">Push App</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('EWALLET_OVO', 'OVO')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="EWALLET_OVO">
+                                <span class="font-extrabold text-xs text-purple-700 block">OVO</span>
+                                <span class="text-[10px] text-slate-500">Push App</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('EWALLET_DANA', 'DANA')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="EWALLET_DANA">
+                                <span class="font-extrabold text-xs text-blue-500 block">DANA</span>
+                                <span class="text-[10px] text-slate-500">Direct Debit</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentChannel('EWALLET_SHOPEEPAY', 'ShopeePay')" class="pg-channel-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-electric text-center transition-all" data-channel="EWALLET_SHOPEEPAY">
+                                <span class="font-extrabold text-xs text-orange-500 block">ShopeePay</span>
+                                <span class="text-[10px] text-slate-500">QR / App</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Credit/Debit Card -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <button type="button" onclick="selectPaymentChannel('CC_VISA', 'Kartu Kredit / Debit Online (Visa/Mastercard)')" class="pg-channel-btn w-full p-3.5 text-left flex items-center justify-between hover:bg-slate-50 transition-all" data-channel="CC_VISA">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+                                    <i data-lucide="credit-card" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-900">Kartu Kredit / Debit</p>
+                                    <p class="text-[11px] text-slate-500">Visa, Mastercard, JCB (3D Secure)</p>
+                                </div>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-500">3DS</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Order Breakdown & Pay CTA -->
+                <div class="lg:col-span-5 p-5 bg-slate-50 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Ringkasan Pesanan Brand</h3>
+                        <div id="pg-summary-items" class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-2.5 max-h-56 overflow-y-auto text-xs">
+                            <!-- Populated via JS -->
+                        </div>
+
+                        <div class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Metode Pembayaran</span>
+                                <span id="pg-selected-method-label" class="font-bold text-brand-electric">QRIS Instan</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Biaya Transaksi</span>
+                                <span class="font-semibold text-emerald-600">Gratis</span>
+                            </div>
+                            <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-100">
+                                <span>Total Tagihan</span>
+                                <span id="pg-total-amount" class="text-brand-orange">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 space-y-2">
+                        <button onclick="generatePaymentInstruction()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-electric to-brand-blue hover:from-blue-600 hover:to-blue-800 text-white font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2">
+                            <span>Bayar Sekarang</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <p class="text-[10px] text-center text-slate-400">Encrypted Checkout • ERACOM Official</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Payment Instruction & Developer Sandbox Simulator -->
+            <div id="pg-step-pay" class="hidden p-6 bg-slate-50">
+                <div class="max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-lg p-6 text-center space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                        <span>MENUNGGU PEMBAYARAN</span>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-slate-500">Total yang harus dibayar</p>
+                        <p id="pg-pay-amount-display" class="text-3xl font-extrabold text-slate-900 mt-0.5">Rp 0</p>
+                        <p id="pg-pay-channel-display" class="text-xs font-semibold text-brand-electric mt-1">QRIS Instan</p>
+                    </div>
+
+                    <div id="pg-instruction-box" class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+                        <!-- Dynamic QRIS / VA / E-Wallet / CC -->
+                    </div>
+
+                    <!-- Developer Simulator Controls -->
+                    <div class="bg-slate-900 text-white rounded-xl p-4 text-left space-y-3 border border-slate-700">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-brand-orange flex items-center gap-1.5">
+                                <i data-lucide="terminal" class="w-3.5 h-3.5"></i> SIMULASI PAYMENT GATEWAY
+                            </span>
+                            <span class="text-[10px] font-mono text-slate-400">POST /webhook/elvara-pay</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">Uji perubahan status transaksi secara real-time ke sistem pesanan & ERP brand:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <button onclick="simulatePaymentWebhook('PAID')" class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-all flex items-center justify-center gap-1.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                <span>Simulasikan Pembayaran Berhasil (Paid)</span>
+                            </button>
+                            <button onclick="simulatePaymentWebhook('EXPIRED')" class="py-2.5 px-3 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+                                <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                <span>Simulasikan Gagal / Expired</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button onclick="backToPaymentSelection()" class="text-xs text-slate-500 hover:text-slate-800 font-semibold">
+                        ← Ganti Metode Pembayaran
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 4: OFFICIAL BRAND E-RECEIPT / INVOICE ==================== -->
+    <div id="invoice-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-xs z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl border border-slate-200 my-auto">
+            <div id="invoice-printable" class="p-6 space-y-4">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+                <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> Cetak / Simpan PDF
+                </button>
+                <button onclick="closeInvoiceModal()" class="px-5 py-2 rounded-xl bg-brand-electric hover:bg-blue-700 text-white text-xs font-bold">
+                    Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- ==================== JAVASCRIPT D2C APPLICATION LOGIC ==================== -->
+    <script>
+        /**
+         * DATA CABANG RESMI MILIK 1 BRAND: ERACOM
+         */
+        const BRAND_BRANCHES = [
+            {
+                id: 'branch-bdg',
+                name: 'ERACOM Flagship Bandung',
+                shortName: 'Bandung (Pusat)',
+                city: 'Bandung',
+                address: 'Jl. Trunojoyo No. 28, Kota Bandung',
+                tag: 'Central Warehouse',
+                hours: '09.00 - 21.00 WIB',
+                shipping: { reguler: 15000, instant: 25000, pickup: 0 }
+            },
+            {
+                id: 'branch-jkt',
+                name: 'ERACOM Store Jakarta Selatan',
+                shortName: 'Jakarta Selatan',
+                city: 'Jakarta Selatan',
+                address: 'Jl. Gunawarman No. 19, Kebayoran Baru',
+                tag: 'Concept Store',
+                hours: '10.00 - 22.00 WIB',
+                shipping: { reguler: 12000, instant: 22000, pickup: 0 }
+            },
+            {
+                id: 'branch-sby',
+                name: 'ERACOM Store Surabaya',
+                shortName: 'Surabaya',
+                city: 'Surabaya',
+                address: 'Jl. Tunjungan No. 64, Genteng, Surabaya',
+                tag: 'Flagship East',
+                hours: '10.00 - 22.00 WIB',
+                shipping: { reguler: 18000, instant: 28000, pickup: 0 }
+            }
+        ];
+
+        /**
+         * KATALOG FASHION ERACOM (DENGAN VARIAN WARNA, UKURAN & STOK PER CABANG)
+         */
+        let FASHION_PRODUCTS = [
+            {
+                id: 'elv-01',
+                sku: 'ELV-OUT-001',
+                name: 'Aero-Tech Windbreaker Jacket',
+                category: 'Outerwear',
+                badge: 'NEW DROP',
+                price: 489000,
+                wholesalePrice: 415000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Obsidian Black', hex: '#0F172A' },
+                    { name: 'Electric Cobalt', hex: '#2563EB' },
+                    { name: 'Signal Orange', hex: '#F97316' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 8, M: 14, L: 12, XL: 6 },
+                    'branch-jkt': { S: 5, M: 9, L: 7, XL: 3 },
+                    'branch-sby': { S: 4, M: 6, L: 5, XL: 2 }
+                },
+                sold: 342,
+                desc: 'Jaket teknis water-repellent 3-layer dengan potongan boxy modern, resleting waterproof YKK, dan ventilasi punggung tersembunyi.'
+            },
+            {
+                id: 'elv-02',
+                sku: 'ELV-TOP-002',
+                name: 'Heavyweight 280gsm Boxy Oversized Tee',
+                category: 'Tops & Tees',
+                badge: 'BESTSELLER',
+                price: 219000,
+                wholesalePrice: 179000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Chalk White', hex: '#F8FAFC' },
+                    { name: 'Jet Black', hex: '#111827' },
+                    { name: 'Slate Navy', hex: '#1E3A8A' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 15, M: 24, L: 20, XL: 12 },
+                    'branch-jkt': { S: 10, M: 16, L: 14, XL: 8 },
+                    'branch-sby': { S: 8, M: 12, L: 10, XL: 5 }
+                },
+                sold: 890,
+                desc: 'Kaos oversized berbahan 100% Combed Cotton Heavyweight 280gsm dengan kerah rib tebal anti-melar dan sablon high-density.'
+            },
+            {
+                id: 'elv-03',
+                sku: 'ELV-BOT-003',
+                name: 'Parachute Tactical Cargo Pants',
+                category: 'Bottoms',
+                badge: 'BESTSELLER',
+                price: 399000,
+                wholesalePrice: 339000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Carbon Charcoal', hex: '#334155' },
+                    { name: 'Olive Drab', hex: '#3F6212' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 6, M: 12, L: 10, XL: 5 },
+                    'branch-jkt': { S: 4, M: 8, L: 6, XL: 2 },
+                    'branch-sby': { S: 3, M: 5, L: 4, XL: 1 }
+                },
+                sold: 518,
+                desc: 'Celana cargo berbahan nylon crinkle ringan dengan 6 saku utilitas dan tali serut adjustable pada bagian pergelangan kaki.'
+            },
+            {
+                id: 'elv-04',
+                sku: 'ELV-OUT-004',
+                name: 'Orbit Loopback Fleece Hoodie 420gsm',
+                category: 'Outerwear',
+                badge: 'LIMITED',
+                price: 449000,
+                wholesalePrice: 379000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Deep Navy', hex: '#0F172A' },
+                    { name: 'Heather Grey', hex: '#94A3B8' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 5, M: 10, L: 9, XL: 4 },
+                    'branch-jkt': { S: 3, M: 6, L: 5, XL: 0 },
+                    'branch-sby': { S: 2, M: 4, L: 3, XL: 0 }
+                },
+                sold: 412,
+                desc: 'Hoodie premium berbahan cotton fleece 420gsm yang kokoh namun lembut di kulit, dilengkapi bordir ikonik ERACOM Orbit.'
+            },
+            {
+                id: 'elv-05',
+                sku: 'ELV-FTW-005',
+                name: 'Velocity Runner Low-Top Sneakers',
+                category: 'Footwear',
+                badge: 'NEW DROP',
+                price: 599000,
+                wholesalePrice: 510000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Blaze Orange / White', hex: '#F97316' },
+                    { name: 'Electric Blue / Black', hex: '#2563EB' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 7, M: 11, L: 9, XL: 5 },
+                    'branch-jkt': { S: 4, M: 7, L: 6, XL: 3 },
+                    'branch-sby': { S: 2, M: 5, L: 4, XL: 2 }
+                },
+                sold: 264,
+                desc: 'Sneakers harian dengan kombinasi suede premium dan breathable mesh, didukung insole Phylon empuk untuk mobilitas seharian.'
+            },
+            {
+                id: 'elv-06',
+                sku: 'ELV-ACC-006',
+                name: 'Core Crossbody Sling Bag X-Pac',
+                category: 'Accessories',
+                badge: 'BESTSELLER',
+                price: 259000,
+                wholesalePrice: 215000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Stealth Black', hex: '#090D16' },
+                    { name: 'Cobalt Blue', hex: '#1D4ED8' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 12, M: 15, L: 10, XL: 8 },
+                    'branch-jkt': { S: 8, M: 10, L: 7, XL: 4 },
+                    'branch-sby': { S: 6, M: 8, L: 5, XL: 3 }
+                },
+                sold: 630,
+                desc: 'Tas selempang ringkas berbahan kain komposit tahan air dan gesekan, muat untuk tablet mini, kamera compact, dan kebutuhan harian.'
+            },
+            {
+                id: 'elv-07',
+                sku: 'ELV-TOP-007',
+                name: 'Studio Cuban Collar Resort Shirt',
+                category: 'Tops & Tees',
+                badge: 'NEW DROP',
+                price: 289000,
+                wholesalePrice: 245000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Midnight Blue', hex: '#1E3A8A' },
+                    { name: 'Sand Cream', hex: '#E2E8F0' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 9, M: 13, L: 11, XL: 6 },
+                    'branch-jkt': { S: 5, M: 9, L: 8, XL: 4 },
+                    'branch-sby': { S: 4, M: 6, L: 5, XL: 2 }
+                },
+                sold: 315,
+                desc: 'Kemeja lengan pendek kerah camp collar berbahan Tencel-Cotton jatuh dan sejuk, cocok untuk gaya smart-casual.'
+            },
+            {
+                id: 'elv-08',
+                sku: 'ELV-ACC-008',
+                name: 'Embroidered 6-Panel Dad Cap',
+                category: 'Accessories',
+                badge: 'LIMITED',
+                price: 159000,
+                wholesalePrice: 129000,
+                wholesaleMin: 5,
+                image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80',
+                colors: [
+                    { name: 'Washed Black', hex: '#1E293B' },
+                    { name: 'Burnt Orange', hex: '#EA580C' }
+                ],
+                stockByBranch: {
+                    'branch-bdg': { S: 10, M: 14, L: 12, XL: 10 },
+                    'branch-jkt': { S: 6, M: 8, L: 7, XL: 5 },
+                    'branch-sby': { S: 5, M: 7, L: 6, XL: 4 }
+                },
+                sold: 480,
+                desc: 'Topi 6-panel berbahan cotton twill washed dengan bordir 3D logo ERACOM E-Orbit di bagian depan.'
+            }
+        ];
+
+        /**
+         * APPLICATION STATE
+         */
+        let appState = {
+            branchMode: 'multi', // 'single' (1 Flagship Bandung) | 'multi' (Bandung, JKT, SBY)
+            activeBranchId: 'all', // 'all' | 'branch-bdg' | 'branch-jkt' | 'branch-sby'
+            selectedCategory: 'Semua Koleksi',
+            searchQuery: '',
+            // Cart items: [{ key, productId, branchId, size, colorName, colorHex, qty }]
+            cart: [],
+            // Delivery method per branch in cart: { branchId: 'reguler' | 'instant' | 'pickup' }
+            deliveryByBranch: {},
+            promoCode: null,
+            discountType: null, // 'percent' | 'fixed'
+            discountValue: 0,
+            // Modal Quick View temporary selection
+            modalSelection: {
+                productId: null,
+                branchId: 'branch-bdg',
+                size: 'M',
+                colorIdx: 0
+            },
+            currentPaymentOrder: null,
+            selectedPaymentChannel: 'QRIS',
+            selectedPaymentLabel: 'QRIS Instant (Semua E-Wallet & M-Banking)',
+            countdownInterval: null,
+            orders: [],
+            webhookLogs: []
+        };
+
+        /**
+         * HELPERS
+         */
+        function formatRupiah(num) {
+            return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+        }
+
+        function getBranchById(id) {
+            return BRAND_BRANCHES.find(b => b.id === id) || BRAND_BRANCHES[0];
+        }
+
+        function getProductById(id) {
+            return FASHION_PRODUCTS.find(p => p.id === id);
+        }
+
+        function getProductTotalStock(product, branchFilter = 'all') {
+            if (branchFilter === 'all') {
+                return Object.values(product.stockByBranch).reduce((acc, sizes) => {
+                    return acc + Object.values(sizes).reduce((s, v) => s + v, 0);
+                }, 0);
+            }
+            const branchSizes = product.stockByBranch[branchFilter] || {};
+            return Object.values(branchSizes).reduce((s, v) => s + v, 0);
+        }
+
+        function getEffectiveUnitPrice(product, qty) {
+            if (product.wholesalePrice && qty >= product.wholesaleMin) {
+                return product.wholesalePrice;
+            }
+            return product.price;
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-600 text-white border-emerald-500',
+                error: 'bg-rose-600 text-white border-rose-500',
+                warning: 'bg-amber-600 text-white border-amber-500',
+                info: 'bg-slate-900 text-white border-slate-700'
+            };
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-xl text-xs font-semibold transition-all transform translate-y-2 opacity-0 ${colors[type]}`;
+            toast.innerHTML = `<span>${message}</span>`;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function copyToClipboard(text, label = 'Teks') {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(`${label} (${text}) berhasil disalin!`, 'success');
+        }
+
+        function copyVoucherCode(code) {
+            copyToClipboard(code, 'Kode Promo');
+            document.getElementById('promo-code-input').value = code;
+        }
+
+        /**
+         * SWITCHER: 1 FLAGSHIP STORE VS MULTI-CABANG BRAND
+         */
+        function switchBranchMode(mode) {
+            appState.branchMode = mode;
+            const btnSingle = document.getElementById('btn-mode-single');
+            const btnMulti = document.getElementById('btn-mode-multi');
+            const multiContainer = document.getElementById('multi-branch-container');
+            const singleContainer = document.getElementById('single-branch-container');
+
+            if (mode === 'single') {
+                btnSingle.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 bg-gradient-to-r from-brand-electric to-brand-blue text-white shadow';
+                btnMulti.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white';
+
+                appState.activeBranchId = 'branch-bdg';
+                multiContainer.classList.add('hidden');
+                singleContainer.classList.remove('hidden');
+
+                document.getElementById('header-brand-subtitle').textContent = 'Official Flagship Store • Gudang Pusat Bandung';
+                document.getElementById('hero-branch-status').innerHTML = `<span class="w-2 h-2 rounded-full bg-blue-400"></span> Dikirim Langsung dari Flagship Bandung`;
+                showToast('Mode 1 Flagship Store aktif (Stok Gudang Pusat Bandung)', 'info');
+            } else {
+                btnMulti.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 bg-gradient-to-r from-brand-electric to-brand-blue text-white shadow';
+                btnSingle.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white';
+
+                appState.activeBranchId = 'all';
+                multiContainer.classList.remove('hidden');
+                singleContainer.classList.add('hidden');
+
+                document.getElementById('header-brand-subtitle').textContent = 'Official Store • Bandung • Jakarta • Surabaya';
+                document.getElementById('hero-branch-status').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> 3 Outlet Resmi Siap Kirim & Pickup`;
+                showToast('Mode Multi-Cabang Brand aktif (Bandung, Jakarta, Surabaya)', 'info');
+            }
+
+            renderBranchPills();
+            renderProducts();
+            renderCart();
+            lucide.createIcons();
+        }
+
+        /**
+         * NAVIGATION VIEW SWITCHER
+         */
+        function switchMainView(viewName) {
+            ['storefront', 'orders', 'backoffice'].forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden');
+                const tab = document.getElementById(`nav-tab-${v}`);
+                if (tab) {
+                    tab.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5 relative';
+                }
+            });
+
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`nav-tab-${viewName}`);
+            if (activeTab) {
+                activeTab.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-brand-electric text-white transition-all flex items-center gap-1.5 relative';
+            }
+
+            if (viewName === 'orders') renderOrdersView();
+            if (viewName === 'backoffice') renderBackoffice();
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * RENDER BRANCH PILLS & CATEGORIES
+         */
+        function renderBranchPills() {
+            const container = document.getElementById('branch-pills-container');
+            const isAll = appState.activeBranchId === 'all';
+
+            let html = `
+                <button onclick="selectBranchFilter('all')" class="flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${isAll ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'}">
+                    <div class="w-9 h-9 rounded-lg ${isAll ? 'bg-brand-orange text-white' : 'bg-white text-slate-700 border border-slate-200'} flex items-center justify-center shrink-0">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold truncate">Semua Cabang (3 Kota)</p>
+                        <p class="text-[10px] ${isAll ? 'text-slate-300' : 'text-slate-500'} truncate">Stok gabungan nasional</p>
+                    </div>
+                </button>
+            `;
+
+            BRAND_BRANCHES.forEach(branch => {
+                const active = appState.activeBranchId === branch.id;
+                html += `
+                    <button onclick="selectBranchFilter('${branch.id}')" class="flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${active ? 'bg-brand-electric text-white border-brand-electric shadow-md' : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'}">
+                        <div class="w-9 h-9 rounded-lg ${active ? 'bg-white/20 text-white' : 'bg-blue-50 text-brand-electric'} flex items-center justify-center shrink-0">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-1.5">
+                                <p class="text-xs font-bold truncate">${branch.shortName}</p>
+                            </div>
+                            <p class="text-[10px] ${active ? 'text-blue-100' : 'text-slate-500'} truncate">${branch.tag} • Pickup Ready</p>
+                        </div>
+                    </button>
+                `;
+            });
+
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function selectBranchFilter(branchId) {
+            appState.activeBranchId = branchId;
+            renderBranchPills();
+            renderProducts();
+        }
+
+        function renderCategories() {
+            const categories = ['Semua Koleksi', 'Outerwear', 'Tops & Tees', 'Bottoms', 'Footwear', 'Accessories'];
+            const container = document.getElementById('category-filters');
+            container.innerHTML = categories.map(cat => {
+                const active = appState.selectedCategory === cat;
+                return `
+                    <button onclick="selectCategory('${cat}')" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${active ? 'bg-slate-900 text-white shadow-xs' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(cat) {
+            appState.selectedCategory = cat;
+            renderCategories();
+            renderProducts();
+        }
+
+        function handleSearch(val) {
+            appState.searchQuery = val.trim().toLowerCase();
+            document.getElementById('search-input').value = val;
+            document.getElementById('search-input-mobile').value = val;
+            document.getElementById('clear-search-btn').classList.toggle('hidden', !val);
+            renderProducts();
+        }
+
+        function clearSearch() {
+            handleSearch('');
+        }
+
+        function resetFilters() {
+            appState.selectedCategory = 'Semua Koleksi';
+            appState.searchQuery = '';
+            if (appState.branchMode === 'multi') appState.activeBranchId = 'all';
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-input-mobile').value = '';
+            document.getElementById('filter-instock').checked = false;
+            document.getElementById('sort-select').value = 'featured';
+            renderBranchPills();
+            renderCategories();
+            renderProducts();
+        }
+
+        /**
+         * RENDER FASHION CATALOG GRID
+         */
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const emptyState = document.getElementById('empty-products-state');
+            const onlyInStock = document.getElementById('filter-instock').checked;
+            const sortBy = document.getElementById('sort-select').value;
+
+            let filtered = FASHION_PRODUCTS.filter(p => {
+                const matchCat = appState.selectedCategory === 'Semua Koleksi' || p.category === appState.selectedCategory;
+                const matchQuery = !appState.searchQuery ||
+                    p.name.toLowerCase().includes(appState.searchQuery) ||
+                    p.category.toLowerCase().includes(appState.searchQuery) ||
+                    p.sku.toLowerCase().includes(appState.searchQuery);
+                const stockCount = getProductTotalStock(p, appState.activeBranchId);
+                const matchStock = !onlyInStock || stockCount > 0;
+                return matchCat && matchQuery && matchStock;
+            });
+
+            if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+            else if (sortBy === 'bestseller') filtered.sort((a, b) => b.sold - a.sold);
+
+            const branchLabel = appState.activeBranchId === 'all'
+                ? 'seluruh cabang ERACOM'
+                : getBranchById(appState.activeBranchId).name;
+            document.getElementById('product-count-label').innerHTML = `Menampilkan <strong>${filtered.length}</strong> artikel dari <strong>${branchLabel}</strong>`;
+
+            const hasFilter = appState.selectedCategory !== 'Semua Koleksi' || appState.searchQuery !== '' || (appState.branchMode === 'multi' && appState.activeBranchId !== 'all') || onlyInStock;
+            document.getElementById('reset-all-filters-btn').classList.toggle('hidden', !hasFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(prod => {
+                const totalStock = getProductTotalStock(prod, appState.activeBranchId);
+                const outOfStock = totalStock <= 0;
+                const badgeColors = {
+                    'NEW DROP': 'bg-brand-electric text-white',
+                    'BESTSELLER': 'bg-brand-orange text-white',
+                    'LIMITED': 'bg-slate-900 text-amber-400 border border-amber-400/40'
+                };
+
+                return `
+                    <article class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-xl hover:border-blue-300 transition-all flex flex-col overflow-hidden group">
+                        <!-- Fashion Image -->
+                        <div onclick="openProductDetail('${prod.id}')" class="relative h-64 bg-slate-100 cursor-pointer overflow-hidden">
+                            <img src="${prod.image}" alt="${prod.name}" onerror="this.src='https://placehold.co/600x700/0f172a/ffffff?text=ERACOM+STUDIO'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Top Badge -->
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-extrabold tracking-wider uppercase shadow ${badgeColors[prod.badge] || 'bg-slate-900 text-white'}">
+                                ${prod.badge}
+                            </span>
+
+                            <!-- Stock Indicator -->
+                            <span class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-white/90 backdrop-blur-xs text-slate-800 text-[10px] font-bold shadow-2xs">
+                                ${outOfStock ? 'Habis' : `Stok: ${totalStock}`}
+                            </span>
+
+                            <!-- Quick Select Overlay -->
+                            <div class="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="w-full py-2 rounded-xl bg-slate-900/90 backdrop-blur-xs text-white text-xs font-bold shadow-lg flex items-center justify-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5 text-brand-orange"></i>
+                                    <span>Pilih Ukuran & Warna</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                            <div>
+                                <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                                    <span>${prod.category}</span>
+                                    <span>${prod.sold} terjual</span>
+                                </div>
+                                <h3 onclick="openProductDetail('${prod.id}')" class="font-bold text-slate-900 text-sm leading-snug line-clamp-1 hover:text-brand-electric cursor-pointer">
+                                    ${prod.name}
+                                </h3>
+
+                                <!-- Color Swatches Preview -->
+                                <div class="flex items-center gap-1.5 mt-2">
+                                    ${prod.colors.map(c => `
+                                        <span title="${c.name}" class="w-3.5 h-3.5 rounded-full border border-slate-300 shadow-2xs" style="background-color: ${c.hex};"></span>
+                                    `).join('')}
+                                    <span class="text-[10px] text-slate-400 ml-1">${prod.colors.length} Warna • S-XL</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
+                                <div>
+                                    <p class="text-base font-extrabold text-slate-900">${formatRupiah(prod.price)}</p>
+                                    <p class="text-[10px] text-emerald-600 font-medium">Bundle ≥${prod.wholesaleMin}: ${formatRupiah(prod.wholesalePrice)}</p>
+                                </div>
+                                <button onclick="openProductDetail('${prod.id}')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-brand-electric text-white text-xs font-bold transition-all">
+                                    Beli
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        /**
+         * PRODUCT DETAIL MODAL (SIZE SELECTOR, COLOR SWATCH, BRANCH STOCK & RESELLER BUNDLE)
+         */
+        function openProductDetail(productId) {
+            const prod = getProductById(productId);
+            if (!prod) return;
+
+            const defaultBranch = appState.activeBranchId === 'all' ? 'branch-bdg' : appState.activeBranchId;
+            appState.modalSelection = {
+                productId: prod.id,
+                branchId: defaultBranch,
+                size: 'M',
+                colorIdx: 0
+            };
+
+            renderProductDetailContent();
+            const modal = document.getElementById('product-detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function renderProductDetailContent() {
+            const { productId, branchId, size, colorIdx } = appState.modalSelection;
+            const prod = getProductById(productId);
+            const selectedColor = prod.colors[colorIdx] || prod.colors[0];
+            const branchStockObj = prod.stockByBranch[branchId] || { S: 0, M: 0, L: 0, XL: 0 };
+            const currentSizeStock = branchStockObj[size] || 0;
+
+            const container = document.getElementById('product-detail-content');
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-12">
+                    <!-- Left Image -->
+                    <div class="md:col-span-5 bg-slate-100 relative min-h-[280px]">
+                        <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-900/85 text-white text-[10px] font-bold">${prod.sku}</span>
+                    </div>
+
+                    <!-- Right Options -->
+                    <div class="md:col-span-7 p-5 sm:p-6 flex flex-col justify-between space-y-4 max-h-[85vh] overflow-y-auto">
+                        <div class="space-y-4">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-brand-electric">${prod.category}</span>
+                                    <h2 class="font-display text-xl font-extrabold text-slate-900 mt-0.5">${prod.name}</h2>
+                                </div>
+                                <button onclick="closeProductDetail()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-2xl font-extrabold text-slate-900">${formatRupiah(prod.price)}</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold">
+                                    Reseller/Bundle ≥${prod.wholesaleMin} pcs: ${formatRupiah(prod.wholesalePrice)}/pcs
+                                </span>
+                            </div>
+
+                            <p class="text-xs text-slate-600 leading-relaxed">${prod.desc}</p>
+
+                            <!-- Branch Selector (In Multi-Branch Mode) -->
+                            ${appState.branchMode === 'multi' ? `
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 mb-1.5">Pilih Cabang Pengiriman / Pickup:</label>
+                                    <div class="grid grid-cols-3 gap-2">
+                                        ${BRAND_BRANCHES.map(b => {
+                                            const totalBStock = getProductTotalStock(prod, b.id);
+                                            const active = b.id === branchId;
+                                            return `
+                                                <button type="button" onclick="selectModalBranch('${b.id}')" class="p-2 rounded-xl border text-left transition-all ${active ? 'border-brand-electric bg-blue-50/70 ring-1 ring-brand-electric' : 'border-slate-200 hover:bg-slate-50'}">
+                                                    <p class="text-[11px] font-bold text-slate-900 truncate">${b.city}</p>
+                                                    <p class="text-[10px] ${totalBStock > 0 ? 'text-emerald-600' : 'text-rose-500'} font-semibold">Stok: ${totalBStock}</p>
+                                                </button>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div class="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-slate-700 flex items-center gap-2">
+                                    <i data-lucide="warehouse" class="w-4 h-4 text-brand-electric shrink-0"></i>
+                                    <span>Dikirim dari <strong>ERACOM Flagship & Central Warehouse (Bandung)</strong></span>
+                                </div>
+                            `}
+
+                            <!-- Color Swatch Selector -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-800 mb-1.5">Warna: <span class="font-normal text-slate-600">${selectedColor.name}</span></label>
+                                <div class="flex items-center gap-2.5">
+                                    ${prod.colors.map((c, idx) => `
+                                        <button type="button" onclick="selectModalColor(${idx})" class="w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all ${idx === colorIdx ? 'border-brand-orange scale-110 shadow' : 'border-slate-300'}" style="background-color: ${c.hex};" title="${c.name}">
+                                            ${idx === colorIdx ? `<span class="w-2.5 h-2.5 rounded-full bg-white shadow"></span>` : ''}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Size Selector -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-xs font-bold text-slate-800">Pilih Ukuran: <span class="text-brand-electric">${size}</span> (Tersedia: ${currentSizeStock} pcs)</label>
+                                    <button type="button" onclick="openSizeChartModal()" class="text-[11px] font-semibold text-brand-orange hover:underline flex items-center gap-1">
+                                        <i data-lucide="ruler" class="w-3 h-3"></i> Size Chart
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-4 gap-2">
+                                    ${['S', 'M', 'L', 'XL'].map(sz => {
+                                        const st = branchStockObj[sz] || 0;
+                                        const isSelected = sz === size;
+                                        return `
+                                            <button type="button" onclick="selectModalSize('${sz}')" ${st <= 0 ? 'disabled' : ''} class="py-2.5 rounded-xl border text-center transition-all ${st <= 0 ? 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed line-through' : isSelected ? 'bg-slate-900 text-white border-slate-900 font-bold shadow' : 'bg-white hover:border-brand-electric text-slate-800 border-slate-200 font-semibold'}">
+                                                <span class="text-xs block">${sz}</span>
+                                                <span class="text-[9px] ${isSelected ? 'text-slate-300' : 'text-slate-400'}">${st} pcs</span>
+                                            </button>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-2.5">
+                            <button onclick="addSelectedToCart(1)" ${currentSizeStock <= 0 ? 'disabled' : ''} class="flex-1 py-3 px-4 rounded-xl bg-brand-electric hover:bg-blue-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                <span>${currentSizeStock <= 0 ? 'Ukuran Ini Habis' : '+ Tambah ke Shopping Bag'}</span>
+                            </button>
+                            ${currentSizeStock >= prod.wholesaleMin ? `
+                                <button onclick="addSelectedToCart(${prod.wholesaleMin})" class="py-3 px-4 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs shadow-md transition-all">
+                                    Bundle ${prod.wholesaleMin}x (${formatRupiah(prod.wholesalePrice)}/pcs)
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function selectModalBranch(bId) {
+            appState.modalSelection.branchId = bId;
+            renderProductDetailContent();
+        }
+
+        function selectModalColor(idx) {
+            appState.modalSelection.colorIdx = idx;
+            renderProductDetailContent();
+        }
+
+        function selectModalSize(sz) {
+            appState.modalSelection.size = sz;
+            renderProductDetailContent();
+        }
+
+        function closeProductDetail() {
+            const modal = document.getElementById('product-detail-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openSizeChartModal() {
+            const modal = document.getElementById('size-chart-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeSizeChartModal() {
+            const modal = document.getElementById('size-chart-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        /**
+         * SHOPPING BAG & IN-STORE PICKUP / COURIER LOGIC
+         */
+        function toggleCartDrawer(open) {
+            const overlay = document.getElementById('cart-drawer-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            if (open) {
+                renderCart();
+                overlay.classList.remove('hidden');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                overlay.classList.add('hidden');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        function addSelectedToCart(qty = 1) {
+            const { productId, branchId, size, colorIdx } = appState.modalSelection;
+            const prod = getProductById(productId);
+            if (!prod) return;
+
+            const color = prod.colors[colorIdx] || prod.colors[0];
+            const availableStock = (prod.stockByBranch[branchId] && prod.stockByBranch[branchId][size]) || 0;
+            if (availableStock <= 0) {
+                showToast('Maaf, stok ukuran ini sedang kosong di cabang terpilih', 'error');
+                return;
+            }
+
+            const itemKey = `${productId}__${branchId}__${size}__${color.name}`;
+            const existing = appState.cart.find(i => i.key === itemKey);
+
+            if (existing) {
+                if (existing.qty + qty > availableStock) {
+                    showToast(`Maksimal stok ukuran ${size} hanya ${availableStock} pcs`, 'warning');
+                    existing.qty = availableStock;
+                } else {
+                    existing.qty += qty;
+                    showToast(`Jumlah ${prod.name} (${size}) diperbarui`, 'success');
+                }
+            } else {
+                appState.cart.push({
+                    key: itemKey,
+                    productId,
+                    branchId,
+                    size,
+                    colorName: color.name,
+                    colorHex: color.hex,
+                    qty: Math.min(qty, availableStock)
+                });
+                if (!appState.deliveryByBranch[branchId]) {
+                    appState.deliveryByBranch[branchId] = 'reguler';
+                }
+                showToast(`Ditambahkan: ${prod.name} (${size} - ${color.name})`, 'success');
+            }
+
+            updateCartBadge();
+            closeProductDetail();
+            toggleCartDrawer(true);
+        }
+
+        function updateCartItemQty(itemKey, delta) {
+            const idx = appState.cart.findIndex(i => i.key === itemKey);
+            if (idx === -1) return;
+            const item = appState.cart[idx];
+            const prod = getProductById(item.productId);
+            const maxStock = (prod.stockByBranch[item.branchId] && prod.stockByBranch[item.branchId][item.size]) || 0;
+            const newQty = item.qty + delta;
+
+            if (newQty <= 0) {
+                appState.cart.splice(idx, 1);
+            } else if (newQty > maxStock) {
+                showToast(`Stok ukuran ${item.size} maksimal ${maxStock} pcs`, 'warning');
+                return;
+            } else {
+                item.qty = newQty;
+            }
+
+            updateCartBadge();
+            renderCart();
+        }
+
+        function changeBranchDelivery(branchId, method) {
+            appState.deliveryByBranch[branchId] = method;
+            renderCart();
+        }
+
+        function applyPromoCode() {
+            const input = document.getElementById('promo-code-input').value.trim().toUpperCase();
+            const feedback = document.getElementById('promo-feedback');
+            feedback.classList.remove('hidden');
+
+            if (input === 'ERACOM20') {
+                appState.promoCode = 'ERACOM20';
+                appState.discountType = 'percent';
+                appState.discountValue = 20;
+                feedback.className = 'text-[11px] text-emerald-600 font-semibold';
+                feedback.textContent = '✓ Kode ERACOM20 aktif! Diskon 20% dari subtotal produk.';
+                showToast('Voucher ERACOM20 (20%) diterapkan!', 'success');
+            } else if (input === 'NEWDROP') {
+                appState.promoCode = 'NEWDROP';
+                appState.discountType = 'fixed';
+                appState.discountValue = 50000;
+                feedback.className = 'text-[11px] text-emerald-600 font-semibold';
+                feedback.textContent = '✓ Kode NEWDROP aktif! Potongan langsung Rp 50.000.';
+                showToast('Voucher NEWDROP (Rp 50.000) diterapkan!', 'success');
+            } else {
+                appState.promoCode = null;
+                appState.discountType = null;
+                appState.discountValue = 0;
+                feedback.className = 'text-[11px] text-rose-600 font-semibold';
+                feedback.textContent = '✕ Kode tidak valid. Coba: ERACOM20 atau NEWDROP';
+            }
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            const total = appState.cart.reduce((sum, i) => sum + i.qty, 0);
+            document.getElementById('cart-count-badge').textContent = total;
+        }
+
+        function calculateCartTotals() {
+            const grouped = {};
+            appState.cart.forEach(item => {
+                const prod = getProductById(item.productId);
+                if (!prod) return;
+                if (!grouped[item.branchId]) grouped[item.branchId] = [];
+                grouped[item.branchId].push({ ...item, product: prod });
+            });
+
+            let subtotal = 0;
+            let totalShipping = 0;
+            const branchIds = Object.keys(grouped);
+
+            branchIds.forEach(bId => {
+                const branch = getBranchById(bId);
+                const method = appState.deliveryByBranch[bId] || 'reguler';
+                totalShipping += branch.shipping[method] ?? 15000;
+
+                grouped[bId].forEach(entry => {
+                    subtotal += getEffectiveUnitPrice(entry.product, entry.qty) * entry.qty;
+                });
+            });
+
+            let discountAmount = 0;
+            if (appState.discountType === 'percent') {
+                discountAmount = Math.round(subtotal * (appState.discountValue / 100));
+            } else if (appState.discountType === 'fixed') {
+                discountAmount = Math.min(subtotal, appState.discountValue);
+            }
+
+            const grandTotal = Math.max(0, subtotal + totalShipping - discountAmount);
+            return { grouped, branchIds, subtotal, totalShipping, discountAmount, grandTotal };
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const checkoutBtn = document.getElementById('btn-proceed-checkout');
+            const { grouped, branchIds, subtotal, totalShipping, discountAmount, grandTotal } = calculateCartTotals();
+
+            if (branchIds.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <div class="w-14 h-14 rounded-full bg-slate-200/70 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                        </div>
+                        <p class="text-sm font-bold text-slate-700">Shopping Bag Kosong</p>
+                        <p class="text-xs text-slate-500 mt-1">Pilih ukuran dan warna artikel favoritmu dari katalog.</p>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+            } else {
+                checkoutBtn.disabled = false;
+                container.innerHTML = branchIds.map(bId => {
+                    const branch = getBranchById(bId);
+                    const items = grouped[bId];
+                    const selectedMethod = appState.deliveryByBranch[bId] || 'reguler';
+
+                    return `
+                        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs">
+                            <div class="px-3.5 py-2.5 bg-slate-900 text-white flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-orange"></i>
+                                    <span class="text-xs font-bold">${branch.name}</span>
+                                </div>
+                                <span class="text-[10px] text-slate-300">${branch.city}</span>
+                            </div>
+
+                            <div class="divide-y divide-slate-100 px-3.5">
+                                ${items.map(entry => {
+                                    const unitPrice = getEffectiveUnitPrice(entry.product, entry.qty);
+                                    const isBundle = unitPrice < entry.product.price;
+                                    return `
+                                        <div class="py-3 flex items-center justify-between gap-2.5">
+                                            <div class="flex items-center gap-2.5 min-w-0">
+                                                <img src="${entry.product.image}" class="w-12 h-14 rounded-lg object-cover bg-slate-100 shrink-0">
+                                                <div class="min-w-0">
+                                                    <p class="text-xs font-bold text-slate-900 truncate">${entry.product.name}</p>
+                                                    <div class="flex items-center gap-1.5 mt-0.5 text-[10px] text-slate-500">
+                                                        <span class="px-1.5 py-0.2 rounded bg-slate-100 font-bold text-slate-700">Size: ${entry.size}</span>
+                                                        <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full border border-slate-300" style="background:${entry.colorHex}"></span>${entry.colorName}</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1.5 mt-1">
+                                                        <span class="text-xs font-extrabold text-brand-electric">${formatRupiah(unitPrice)}</span>
+                                                        ${isBundle ? `<span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-700 text-[9px] font-bold">Bundle</span>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-center gap-1.5 bg-slate-100 rounded-lg p-1 shrink-0">
+                                                <button onclick="updateCartItemQty('${entry.key}', -1)" class="w-6 h-6 rounded bg-white text-slate-700 hover:bg-slate-200 text-xs font-bold">-</button>
+                                                <span class="w-5 text-center text-xs font-bold">${entry.qty}</span>
+                                                <button onclick="updateCartItemQty('${entry.key}', 1)" class="w-6 h-6 rounded bg-white text-slate-700 hover:bg-slate-200 text-xs font-bold">+</button>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+
+                            <!-- Delivery / In-Store Pickup Selector -->
+                            <div class="px-3.5 py-2.5 bg-blue-50/50 border-t border-slate-100 flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-semibold text-slate-600">Metode Ambil/Kirim:</span>
+                                <select onchange="changeBranchDelivery('${bId}', this.value)" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-[11px] font-semibold text-slate-800 focus:outline-none focus:border-brand-electric">
+                                    <option value="reguler" ${selectedMethod === 'reguler' ? 'selected' : ''}>Kurir Reguler (${formatRupiah(branch.shipping.reguler)})</option>
+                                    <option value="instant" ${selectedMethod === 'instant' ? 'selected' : ''}>Same-Day / Instant (${formatRupiah(branch.shipping.instant)})</option>
+                                    <option value="pickup" ${selectedMethod === 'pickup' ? 'selected' : ''}>Pick Up In-Store (${branch.city} - Rp 0)</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('cart-subtotal').textContent = formatRupiah(subtotal);
+            document.getElementById('cart-shipping').textContent = totalShipping === 0 && branchIds.length > 0 ? 'Gratis (In-Store Pickup)' : formatRupiah(totalShipping);
+            document.getElementById('cart-grand-total').textContent = formatRupiah(grandTotal);
+
+            const discountRow = document.getElementById('cart-discount-row');
+            if (discountAmount > 0) {
+                discountRow.classList.remove('hidden');
+                document.getElementById('cart-discount').textContent = `-${formatRupiah(discountAmount)}`;
+            } else {
+                discountRow.classList.add('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        /**
+         * PAYMENT GATEWAY CHECKOUT FLOW
+         */
+        function openCheckoutModal() {
+            const { grouped, branchIds, subtotal, totalShipping, discountAmount, grandTotal } = calculateCartTotals();
+            if (branchIds.length === 0) return;
+
+            toggleCartDrawer(false);
+
+            const orderNumber = 'ELV-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
+            appState.currentPaymentOrder = {
+                id: orderNumber,
+                createdAt: new Date().toLocaleString('id-ID'),
+                branchIds,
+                grouped,
+                deliveryMethods: { ...appState.deliveryByBranch },
+                subtotal,
+                totalShipping,
+                discountAmount,
+                grandTotal,
+                status: 'PENDING',
+                fulfillmentStatus: 'Menunggu Pembayaran',
+                paymentChannel: appState.selectedPaymentChannel,
+                paymentLabel: appState.selectedPaymentLabel
+            };
+
+            document.getElementById('pg-order-id').textContent = `ORDER-ID: #${orderNumber}`;
+            document.getElementById('pg-total-amount').textContent = formatRupiah(grandTotal);
+
+            const summaryBox = document.getElementById('pg-summary-items');
+            summaryBox.innerHTML = branchIds.map(bId => {
+                const branch = getBranchById(bId);
+                const method = appState.deliveryByBranch[bId] || 'reguler';
+                const methodLabel = method === 'pickup' ? 'In-Store Pickup' : method === 'instant' ? 'Same-Day Instant' : 'Kurir Reguler';
+                return `
+                    <div class="pb-2 border-b border-slate-100 last:border-b-0 last:pb-0">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-slate-900 text-[11px]">${branch.name}</span>
+                            <span class="px-1.5 py-0.2 rounded bg-blue-50 text-brand-electric text-[10px] font-semibold">${methodLabel}</span>
+                        </div>
+                        ${grouped[bId].map(i => `
+                            <div class="flex justify-between text-slate-600 pl-2">
+                                <span>${i.product.name} [${i.size} / ${i.colorName}] ×${i.qty}</span>
+                                <span class="font-semibold">${formatRupiah(getEffectiveUnitPrice(i.product, i.qty) * i.qty)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('') + `
+                <div class="pt-2 border-t border-slate-200 flex justify-between text-slate-600">
+                    <span>Ongkir / Pickup</span>
+                    <span class="font-semibold">${formatRupiah(totalShipping)}</span>
+                </div>
+                ${discountAmount > 0 ? `
+                    <div class="flex justify-between text-emerald-600 font-semibold">
+                        <span>Diskon (${appState.promoCode})</span>
+                        <span>-${formatRupiah(discountAmount)}</span>
+                    </div>
+                ` : ''}
+            `;
+
+            document.getElementById('pg-step-select').classList.remove('hidden');
+            document.getElementById('pg-step-pay').classList.add('hidden');
+            startPaymentCountdown(15 * 60);
+
+            const modal = document.getElementById('payment-gateway-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closePaymentGateway() {
+            if (appState.countdownInterval) clearInterval(appState.countdownInterval);
+            const modal = document.getElementById('payment-gateway-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function startPaymentCountdown(seconds) {
+            if (appState.countdownInterval) clearInterval(appState.countdownInterval);
+            let remaining = seconds;
+            const display = document.getElementById('pg-countdown');
+
+            const tick = () => {
+                const mins = String(Math.floor(remaining / 60)).padStart(2, '0');
+                const secs = String(remaining % 60).padStart(2, '0');
+                display.textContent = `${mins}:${secs}`;
+                if (remaining <= 0) {
+                    clearInterval(appState.countdownInterval);
+                    simulatePaymentWebhook('EXPIRED');
+                }
+                remaining--;
+            };
+            tick();
+            appState.countdownInterval = setInterval(tick, 1000);
+        }
+
+        function selectPaymentChannel(channel, label) {
+            appState.selectedPaymentChannel = channel;
+            appState.selectedPaymentLabel = label;
+            document.getElementById('pg-selected-method-label').textContent = label;
+
+            document.querySelectorAll('.pg-channel-btn').forEach(btn => {
+                if (btn.dataset.channel === channel) {
+                    btn.classList.add('border-brand-electric', 'bg-blue-50/60', 'ring-2', 'ring-brand-electric/20');
+                } else {
+                    btn.classList.remove('border-brand-electric', 'bg-blue-50/60', 'ring-2', 'ring-brand-electric/20');
+                }
+            });
+        }
+
+        function generatePaymentInstruction() {
+            const buyerName = document.getElementById('pg-buyer-name').value.trim();
+            const buyerAddress = document.getElementById('pg-buyer-address').value.trim();
+            if (!buyerName || !buyerAddress) {
+                showToast('Lengkapi nama dan alamat/catatan terlebih dahulu', 'warning');
+                return;
+            }
+
+            const order = appState.currentPaymentOrder;
+            order.buyerName = buyerName;
+            order.buyerPhone = document.getElementById('pg-buyer-phone').value.trim();
+            order.buyerAddress = buyerAddress;
+            order.paymentChannel = appState.selectedPaymentChannel;
+            order.paymentLabel = appState.selectedPaymentLabel;
+
+            document.getElementById('pg-step-select').classList.add('hidden');
+            document.getElementById('pg-step-pay').classList.remove('hidden');
+
+            document.getElementById('pg-pay-amount-display').textContent = formatRupiah(order.grandTotal);
+            document.getElementById('pg-pay-channel-display').textContent = order.paymentLabel;
+
+            const box = document.getElementById('pg-instruction-box');
+            const channel = order.paymentChannel;
+
+            if (channel === 'QRIS') {
+                box.innerHTML = `
+                    <p class="text-xs font-bold text-slate-800 mb-2">Scan QRIS Resmi ERACOM</p>
+                    <div id="dynamic-qris-canvas" class="w-44 h-44 mx-auto bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-center"></div>
+                    <p class="text-[11px] text-slate-500 mt-2 font-mono">NMID: ID102026ERACOM01 • ERACOM</p>
+                `;
+                setTimeout(() => {
+                    const qrTarget = document.getElementById('dynamic-qris-canvas');
+                    if (qrTarget && typeof QRCode !== 'undefined') {
+                        new QRCode(qrTarget, {
+                            text: `00020101021226580016ID.CO.ERACOM.WWW0118936005230000998877520456915303360540${order.grandTotal}5802ID5913ERACOM6007BANDUNG6304EF12`,
+                            width: 154,
+                            height: 154,
+                            colorDark: '#0f172a',
+                            colorLight: '#ffffff'
+                        });
+                    }
+                }, 50);
+            } else if (channel.startsWith('VA_')) {
+                const bankCode = channel.replace('VA_', '');
+                const prefixes = { BCA: '88010', MANDIRI: '89022', BNI: '82410', BRI: '26215' };
+                const vaNumber = (prefixes[bankCode] || '88000') + '08129988776';
+                order.vaNumber = vaNumber;
+
+                box.innerHTML = `
+                    <p class="text-xs text-slate-500 mb-1">Nomor Virtual Account ${bankCode}</p>
+                    <div class="flex items-center justify-center gap-2 my-2">
+                        <span class="font-mono text-xl sm:text-2xl font-extrabold text-slate-900 tracking-wider">${vaNumber}</span>
+                        <button onclick="copyToClipboard('${vaNumber}', 'Nomor VA')" class="px-2.5 py-1.5 rounded-lg bg-brand-electric hover:bg-blue-700 text-white text-xs font-semibold">
+                            Salin VA
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Pembayaran terverifikasi otomatis oleh ERACOM Pay Gateway.</p>
+                `;
+            } else if (channel.startsWith('EWALLET_')) {
+                const wallet = channel.replace('EWALLET_', '');
+                box.innerHTML = `
+                    <p class="text-xs font-bold text-slate-800">Permintaan Pembayaran ${wallet} Terkirim</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Buka aplikasi <strong>${wallet}</strong> di ponsel Anda (${order.buyerPhone}) dan konfirmasi pembayaran sebesar <strong>${formatRupiah(order.grandTotal)}</strong>.</p>
+                `;
+            } else {
+                box.innerHTML = `
+                    <div class="text-left space-y-2 max-w-xs mx-auto">
+                        <p class="text-xs font-bold text-slate-800 text-center">Otorisasi Kartu Kredit / Debit (3DS)</p>
+                        <input type="text" value="4532 •••• •••• 1024" readonly class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" value="11/29" readonly class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono">
+                            <input type="password" value="888" readonly class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono">
+                        </div>
+                    </div>
+                `;
+            }
+
+            pushWebhookLog('invoice.created', order.id, 'PENDING', order.grandTotal, order.paymentChannel);
+            lucide.createIcons();
+        }
+
+        function backToPaymentSelection() {
+            document.getElementById('pg-step-pay').classList.add('hidden');
+            document.getElementById('pg-step-select').classList.remove('hidden');
+        }
+
+        /**
+         * SIMULATE PAYMENT GATEWAY CALLBACK (PAID / EXPIRED)
+         */
+        function simulatePaymentWebhook(result) {
+            const order = appState.currentPaymentOrder;
+            if (!order) return;
+
+            if (appState.countdownInterval) clearInterval(appState.countdownInterval);
+
+            if (result === 'PAID') {
+                order.status = 'PAID';
+                const hasPickup = Object.values(order.deliveryMethods).includes('pickup');
+                order.fulfillmentStatus = hasPickup ? 'Diproses / Siap Diambil' : 'Diproses';
+                order.paidAt = new Date().toLocaleString('id-ID');
+
+                // Deduct stock per branch & size
+                order.branchIds.forEach(bId => {
+                    order.grouped[bId].forEach(entry => {
+                        const prod = getProductById(entry.product.id);
+                        if (prod && prod.stockByBranch[bId]) {
+                            prod.stockByBranch[bId][entry.size] = Math.max(0, (prod.stockByBranch[bId][entry.size] || 0) - entry.qty);
+                            prod.sold += entry.qty;
+                        }
+                    });
+                });
+
+                appState.orders.unshift(order);
+                pushWebhookLog('payment.success', order.id, 'SETTLEMENT (PAID)', order.grandTotal, order.paymentChannel);
+
+                // Reset cart
+                appState.cart = [];
+                appState.promoCode = null;
+                appState.discountType = null;
+                appState.discountValue = 0;
+                updateCartBadge();
+                renderCart();
+                renderProducts();
+                updateOrdersBadge();
+
+                closePaymentGateway();
+                showToast('Pembayaran Berhasil (PAID)! E-Receipt diterbitkan.', 'success');
+                openInvoiceModal(order.id);
+            } else {
+                order.status = 'EXPIRED';
+                order.fulfillmentStatus = 'Dibatalkan';
+                appState.orders.unshift(order);
+                pushWebhookLog('payment.expired', order.id, 'EXPIRED / FAILED', order.grandTotal, order.paymentChannel);
+
+                updateOrdersBadge();
+                closePaymentGateway();
+                showToast('Transaksi gagal atau kedaluwarsa.', 'error');
+                switchMainView('orders');
+            }
+        }
+
+        function updateOrdersBadge() {
+            const badge = document.getElementById('orders-badge');
+            if (appState.orders.length > 0) {
+                badge.textContent = appState.orders.length;
+                badge.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * OFFICIAL E-RECEIPT / INVOICE & CUSTOMER ORDERS VIEW
+         */
+        function openInvoiceModal(orderId) {
+            const order = appState.orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const isPaid = order.status === 'PAID';
+            const container = document.getElementById('invoice-printable');
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-display font-extrabold text-lg text-slate-900">ERACOM</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-50 text-brand-electric text-[10px] font-bold">OFFICIAL E-RECEIPT</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 font-mono mt-0.5">#${order.id}</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-extrabold ${isPaid ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                        ${order.status}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                    <div>
+                        <p class="text-slate-400 text-[10px] uppercase">Pelanggan</p>
+                        <p class="font-bold text-slate-800">${order.buyerName}</p>
+                        <p class="text-slate-600 text-[11px]">${order.buyerPhone}</p>
+                        <p class="text-slate-500 text-[11px] mt-0.5">${order.buyerAddress}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-slate-400 text-[10px] uppercase">Pembayaran</p>
+                        <p class="font-bold text-brand-electric">${order.paymentLabel}</p>
+                        <p class="text-slate-500 text-[11px] mt-1">${order.paidAt || order.createdAt}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 text-xs">
+                    <p class="font-bold text-slate-800">Rincian Artikel:</p>
+                    ${order.branchIds.map(bId => {
+                        const branch = getBranchById(bId);
+                        const method = order.deliveryMethods[bId] || 'reguler';
+                        const methodText = method === 'pickup' ? 'Pick Up In-Store (Ambil di Toko)' : method === 'instant' ? 'Same-Day Courier' : 'Kurir Reguler';
+                        return `
+                            <div class="border border-slate-200 rounded-xl p-3 space-y-1.5">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-bold text-slate-900 text-[11px]">${branch.name}</p>
+                                    <span class="text-[10px] font-semibold text-brand-orange">${methodText}</span>
+                                </div>
+                                ${order.grouped[bId].map(item => `
+                                    <div class="flex justify-between text-slate-600">
+                                        <span>${item.product.name} (${item.size} • ${item.colorName}) ×${item.qty}</span>
+                                        <span class="font-semibold">${formatRupiah(getEffectiveUnitPrice(item.product, item.qty) * item.qty)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 space-y-1 text-xs">
+                    <div class="flex justify-between text-slate-600">
+                        <span>Subtotal Artikel</span>
+                        <span>${formatRupiah(order.subtotal)}</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>Ongkir / Pickup</span>
+                        <span>${formatRupiah(order.totalShipping)}</span>
+                    </div>
+                    ${order.discountAmount > 0 ? `
+                        <div class="flex justify-between text-emerald-600">
+                            <span>Diskon Voucher</span>
+                            <span>-${formatRupiah(order.discountAmount)}</span>
+                        </div>
+                    ` : ''}
+                    <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+                        <span>Total Dibayar</span>
+                        <span class="text-brand-electric">${formatRupiah(order.grandTotal)}</span>
+                    </div>
+                </div>
+            `;
+
+            const modal = document.getElementById('invoice-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeInvoiceModal() {
+            const modal = document.getElementById('invoice-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function renderOrdersView() {
+            const container = document.getElementById('orders-list-container');
+            if (appState.orders.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl border border-slate-200 p-12 text-center">
+                        <h3 class="font-bold text-slate-800 text-base">Belum ada pesanan</h3>
+                        <p class="text-xs text-slate-500 mt-1">Pilih koleksi ERACOM dan uji simulasi Payment Gateway.</p>
+                        <button onclick="switchMainView('storefront')" class="mt-4 px-4 py-2 rounded-xl bg-brand-electric text-white text-xs font-semibold">Lihat Koleksi</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = appState.orders.map(order => {
+                const isPaid = order.status === 'PAID';
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+                            <div class="flex items-center gap-2.5">
+                                <span class="font-mono text-xs font-bold text-slate-900">#${order.id}</span>
+                                <span class="text-xs text-slate-400">•</span>
+                                <span class="text-xs text-slate-500">${order.createdAt}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${isPaid ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                                    ${order.status}
+                                </span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-brand-electric">
+                                    ${order.fulfillmentStatus}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <p class="text-xs text-slate-600">
+                                    <strong>Cabang:</strong> ${order.branchIds.map(id => getBranchById(id).shortName).join(', ')}
+                                </p>
+                                <p class="text-xs text-slate-500">Metode: <strong class="text-slate-700">${order.paymentLabel}</strong></p>
+                            </div>
+                            <div class="flex items-center gap-3 self-end sm:self-center">
+                                <div class="text-right">
+                                    <p class="text-[11px] text-slate-400">Total</p>
+                                    <p class="text-base font-extrabold text-slate-900">${formatRupiah(order.grandTotal)}</p>
+                                </div>
+                                <button onclick="openInvoiceModal('${order.id}')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-brand-electric text-white text-xs font-semibold transition-all">
+                                    E-Receipt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /**
+         * BRAND OWNER BACKOFFICE (ERP / INVENTORY PER SIZE / FULFILLMENT / WEBHOOKS)
+         */
+        function populateBackofficeFilter() {
+            const select = document.getElementById('backoffice-branch-filter');
+            select.innerHTML = `<option value="all">Semua Cabang ERACOM (Nasional)</option>` +
+                BRAND_BRANCHES.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+        }
+
+        function renderBackoffice() {
+            const branchFilter = document.getElementById('backoffice-branch-filter').value;
+
+            let totalRevenue = 0;
+            let matchingOrders = [];
+
+            appState.orders.forEach(o => {
+                if (branchFilter === 'all' || o.branchIds.includes(branchFilter)) {
+                    matchingOrders.push(o);
+                    if (o.status === 'PAID') {
+                        if (branchFilter === 'all') {
+                            totalRevenue += o.grandTotal;
+                        } else {
+                            (o.grouped[branchFilter] || []).forEach(i => {
+                                totalRevenue += getEffectiveUnitPrice(i.product, i.qty) * i.qty;
+                            });
+                        }
+                    }
+                }
+            });
+
+            const totalStockUnits = FASHION_PRODUCTS.reduce((sum, p) => sum + getProductTotalStock(p, branchFilter), 0);
+
+            document.getElementById('bo-kpi-revenue').textContent = formatRupiah(totalRevenue);
+            document.getElementById('bo-kpi-orders').textContent = matchingOrders.length;
+            document.getElementById('bo-kpi-stock').textContent = `${totalStockUnits} pcs`;
+            document.getElementById('bo-kpi-webhooks').textContent = appState.webhookLogs.length;
+
+            // Fulfillment Orders List
+            const ordersContainer = document.getElementById('bo-orders-container');
+            if (matchingOrders.length === 0) {
+                ordersContainer.innerHTML = `<div class="p-8 text-center text-xs text-slate-400">Belum ada transaksi masuk untuk cabang ini.</div>`;
+            } else {
+                ordersContainer.innerHTML = matchingOrders.map(order => `
+                    <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-xs font-bold text-slate-900">#${order.id}</span>
+                                <span class="px-2 py-0.2 rounded text-[10px] font-bold ${order.status === 'PAID' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${order.status}</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">Pelanggan: <strong>${order.buyerName}</strong> • ${formatRupiah(order.grandTotal)}</p>
+                            <p class="text-[11px] text-slate-400">Cabang: ${order.branchIds.map(id => getBranchById(id).shortName).join(', ')}</p>
+                        </div>
+                        <div>
+                            <select onchange="updateOrderFulfillment('${order.id}', this.value)" ${order.status !== 'PAID' ? 'disabled' : ''} class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800">
+                                <option value="Diproses" ${order.fulfillmentStatus === 'Diproses' ? 'selected' : ''}>Diproses</option>
+                                <option value="Dikemas" ${order.fulfillmentStatus === 'Dikemas' ? 'selected' : ''}>Dikemas</option>
+                                <option value="Dikirim" ${order.fulfillmentStatus === 'Dikirim' ? 'selected' : ''}>Dikirim</option>
+                                <option value="Siap Diambil" ${order.fulfillmentStatus === 'Siap Diambil' || order.fulfillmentStatus === 'Diproses / Siap Diambil' ? 'selected' : ''}>Siap Diambil (Pickup)</option>
+                            </select>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Inventory Manager per Size
+            const targetBranchForStock = branchFilter === 'all' ? 'branch-bdg' : branchFilter;
+            const targetBranchName = getBranchById(targetBranchForStock).shortName;
+            const invContainer = document.getElementById('bo-inventory-list');
+
+            invContainer.innerHTML = `
+                <div class="text-[11px] font-semibold text-brand-electric bg-blue-50 px-3 py-1.5 rounded-lg">
+                    Menampilkan & Restock Stok Cabang: <strong>${targetBranchName}</strong>
+                </div>
+            ` + FASHION_PRODUCTS.map(prod => {
+                const sizes = prod.stockByBranch[targetBranchForStock] || { S: 0, M: 0, L: 0, XL: 0 };
+                return `
+                    <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/60 space-y-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <p class="text-xs font-bold text-slate-900 truncate">${prod.name}</p>
+                            <span class="text-[10px] font-mono text-slate-400">${prod.sku}</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-1.5">
+                            ${['S', 'M', 'L', 'XL'].map(sz => `
+                                <div class="bg-white border border-slate-200 rounded-lg p-1.5 text-center">
+                                    <span class="text-[10px] font-bold text-slate-500 block">${sz}: ${sizes[sz]}</span>
+                                    <button onclick="restockSize('${prod.id}', '${targetBranchForStock}', '${sz}')" class="mt-1 w-full py-0.5 rounded bg-slate-900 hover:bg-brand-electric text-white text-[10px] font-bold transition-colors">
+                                        +5
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function restockSize(prodId, branchId, size) {
+            const prod = getProductById(prodId);
+            if (!prod) return;
+            prod.stockByBranch[branchId][size] = (prod.stockByBranch[branchId][size] || 0) + 5;
+            renderBackoffice();
+            renderProducts();
+            showToast(`Restock +5 pcs ${prod.name} (Size ${size}) di ${getBranchById(branchId).shortName}`, 'success');
+        }
+
+        function updateOrderFulfillment(orderId, newStatus) {
+            const order = appState.orders.find(o => o.id === orderId);
+            if (order) {
+                order.fulfillmentStatus = newStatus;
+                showToast(`Status pesanan #${orderId} diubah menjadi: ${newStatus}`, 'success');
+            }
+        }
+
+        function pushWebhookLog(eventType, orderId, status, amount, channel) {
+            const payload = {
+                event: eventType,
+                timestamp: new Date().toISOString(),
+                brand: 'ERACOM_D2C',
+                order_id: orderId,
+                payment_status: status,
+                gross_amount: amount,
+                payment_channel: channel
+            };
+            appState.webhookLogs.unshift(payload);
+            renderWebhookLogs();
+        }
+
+        function renderWebhookLogs() {
+            const container = document.getElementById('webhook-logs-container');
+            if (appState.webhookLogs.length === 0) {
+                container.innerHTML = `<p class="text-slate-500">// Menunggu callback transaksi dari Payment Gateway...</p>`;
+                return;
+            }
+            container.innerHTML = appState.webhookLogs.map(log => `
+                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px]">
+                    <div class="flex justify-between text-emerald-400 font-bold mb-1">
+                        <span>${log.event}</span>
+                        <span>${log.payment_status}</span>
+                    </div>
+                    <pre class="text-slate-300 overflow-x-auto">${JSON.stringify(log, null, 2)}</pre>
+                </div>
+            `).join('');
+        }
+
+        function clearWebhookLogs() {
+            appState.webhookLogs = [];
+            renderWebhookLogs();
+            renderBackoffice();
+        }
+
+        /**
+         * INIT ON LOAD
+         */
+        window.addEventListener('DOMContentLoaded', () => {
+            renderBranchPills();
+            renderCategories();
+            renderProducts();
+            populateBackofficeFilter();
+            updateCartBadge();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
